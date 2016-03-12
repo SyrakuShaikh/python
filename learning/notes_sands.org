@@ -1,8 +1,17 @@
-# Time-stamp: <2016-03-12 Sat 14:11:00 Shaikh>
-#+TITLE: notes_sands
+# Time-stamp: <2016-03-12 Sat 20:39:36 Shaikh>
+#+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
 
 * Object-Oriented Programming
 ** class, attribute, field, variable, object, instance...
-From [[http://python.swaroopch.com/][A Byte of Python]]
+From [[http://python.swaroopch.com/][A Byte of Python]] chapter 13.
+
+A /class/ creates a new /type/.
+An /object/ is the /instance/ of a /class/.
+
+A /class/ has two *attributes* which are *field* and *method*.
+Variables that belong to /object/ or /class/ are referred as
+*instance variables* or *class variables* respectively, they
+consist of *field*. *Method* is the functions belong to the 
+/class/.
