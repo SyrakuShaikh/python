@@ -1,25 +1,27 @@
-# Time-stamp: <2016-03-12 Sat 00:12:08 Shaikh>
+# Time-stamp: <2016-03-12 Sat 11:52:31 Shaikh>
 import os
 import sys
 import time
 import zipfile
-from itertools import chain
 
 
 def zipfs_error(sys_args):
     """Function that deals with ERROR and gets the option.
     """
     opt_num = 0                     # the number of options
-    del sys_args[0]                 # remove 0th argument
+    if len(sys_args) == 0:
+        return
+    else:
+        del sys_args[0]         # remove 0th argument
+
     for args in sys_args:
         if args.startswith('-'):
             if (args == '-v') | (args == '-q'):
                 opt_num += 1
                 opts = args          # record the option
             else:
-                print("Error! Only \
-                '-v for verbose | -q for quiet' \
-                are allowed options.")
+                print("Error! Only '-v for verbose | "
+                      "-q for quiet' are allowed options.")
                 quit()
         elif os.path.exists(args):
             source.append(args)
@@ -35,21 +37,35 @@ def zipfs_error(sys_args):
         return opts
 
 
-def zipfs(source, target, sys_args):
+def zip_cmd(com_base_len, source, zipf, prtl=[]):
+    """Zip command using zipfile module.
+    """
+    for path in source:
+        if os.path.isfile(path):
+            prtl.append(path)
+            zipf.write(path, path[com_base_len:])
+            source.remove(path)
+        else:
+            for bases, dirs, files in os.walk(path):
+                for name in files:
+                    file_t = os.path.join(bases, name)
+                    file = os.path.abspath(file_t)
+                    prtl.append(file)
+                    zipf.write(file, file[com_base_len:])
+    zipf.close()
+
+
+def zipfs(source, target, opts, printlist):
     """Function that zip files inside different directories.
     """
-    # Deal with errors and get option
-    opts = zipfs_error(sys_args)
     # Create target zip file
     zipf = zipfile.ZipFile(target, 'a', zipfile.ZIP_STORED)
     # First recover every path to its absolute path.
     # Rearrange the files or paths in 'source'.
+    source_t = []
     for path in source:
-        id = source.index(path)
-        abs_path = os.path.abspath(path)
-        del source[id]
-        source.insert(id, abs_path)
-    print(os.walk(path) for path in source)
+        source_t.append(os.path.abspath(path))
+    source = source_t
 
     # Because there may be many files which locate in different
     # directories, the target '.zip' archive needs keep the
@@ -58,18 +74,18 @@ def zipfs(source, target, sys_args):
     com_base_len = len(com_base)+1
 
     # check which option are input.
+    zip_cmd(com_base_len, source, zipf, printlist)
     if opts == '-q':
-        for bases, dirs, files in chain.from_iterable(os.walk(path)
-                                                      for path in source):
-            for name in files:
-                file_t = os.path.join(bases, name)
-                file = os.path.abspath(file_t)
-                # print(file)
-                zipf.write(file, file[com_base_len:])
+        pass
     elif opts == '-v':
-        print('Verbose')
+        print('Zip the following files into', printlist[0])
+        print(10 * '-')
+        for file in printlist[1:]:
+            print(file)
+        print(10 * '-',
+              '\nCompleted successfully!')
     else:
-        print('None')
+        print('Zip file(s) into {} successfully!'.format(target))
 
 
 # 1. The files and directories to be backed up are
@@ -98,6 +114,8 @@ target_seq = [
 today = ''.join(target_seq[:-3])
 now = ''.join(target_seq[-2:])
 
+# Deal with errors and get option
+opts = zipfs_error(sys.argv)
 
 # Take a comment from the user to
 # create the name of the zip file
@@ -109,6 +127,8 @@ else:
     target = ''.join(target_seq[:-1]) + '_' + \
              comment.replace(' ', '_') + '.zip'
 
+# Create the info file for the whole zip process
+printlist = [os.path.abspath(target)]
 
 # Create target directory if it is not present
 if not os.path.exists(today):
@@ -117,7 +137,7 @@ if not os.path.exists(today):
 
 
 # Run the backup
-zipfs(source, target, sys.argv)
+zipfs(source, target, opts, printlist)
 # print("Zip command is:")
 # print("Running:")
 # print('Successful backup to', target)
