@@ -1,4 +1,4 @@
-# Time-stamp: <2016-03-13 Sun 21:18:19 Shaikh>
+# Time-stamp: <2016-03-13 Sun 22:14:11 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -31,3 +31,5 @@ using /double underscore/.
 | baseclass  | derived class |
 | superclass | subclass      |
 
+Python does not automatically call the constructor of the base class,
+you have to explicitly call it yourself.
