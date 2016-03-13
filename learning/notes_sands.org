@@ -1,4 +1,4 @@
-# Time-stamp: <2016-03-12 Sat 20:39:36 Shaikh>
+# Time-stamp: <2016-03-13 Sun 21:18:19 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -7,11 +7,27 @@
 ** class, attribute, field, variable, object, instance...
 From [[http://python.swaroopch.com/][A Byte of Python]] chapter 13.
 
-A /class/ creates a new /type/.
-An /object/ is the /instance/ of a /class/.
+A /class/ creates a new /type/. An /object/ is the /instance/ of a
+/class/.
 
 A /class/ has two *attributes* which are *field* and *method*.
-Variables that belong to /object/ or /class/ are referred as
-*instance variables* or *class variables* respectively, they
-consist of *field*. *Method* is the functions belong to the 
-/class/.
+Variables that belong to /object/ or /class/ are referred as *instance
+variables* or *class variables* respectively, they consist of *field*.
+*Method* is the functions belong to the /class/.
+
+The difference between a /class/ and a /function/ is that the former
+does have an intrinsic argument `self` in every method which need no
+value when you call it.
+
+Usually, there always be a `__init__` method in the definition of a
+/class/ and as named, for initialization.
+
+All /class/ members (including the data members) are *public* and all
+the methods are *virtual* in Python with one exception: with names
+using /double underscore/.
+** inheritance
+| type       | subtype       |
+|------------+---------------|
+| baseclass  | derived class |
+| superclass | subclass      |
+
