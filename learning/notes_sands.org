@@ -1,4 +1,4 @@
-# Time-stamp: <2016-03-13 Sun 22:14:11 Shaikh>
+# Time-stamp: <2016-03-15 Tue 20:59:29 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -33,3 +33,11 @@ using /double underscore/.
 
 Python does not automatically call the constructor of the base class,
 you have to explicitly call it yourself.
+* Exceptions
+** with statement
+See [[https://www.python.org/dev/peps/pep-0343/][PEP 343]] for details. It is a simple and elegant way to replace the
+`try...except...finally` statement in some situations.
+* Misc
+** Unary +
+equals to operator.__pos__(). One of its affect as far as I know is to
+get the value with its original precision.
