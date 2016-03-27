@@ -1,4 +1,4 @@
-# Time-stamp: <2016-03-23 Wed 09:50:30 Shaikh>
+# Time-stamp: <2016-03-27 Sun 17:36:02 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -66,7 +66,10 @@ and is translated to:
       if exec:
           exit(mgr, None, None, None)
 #+END_SRC
-
+* Functions
+The name of a function is, actually, the reference to an object of that
+function. Therefore it is completely O.K. to assign the name to a variable like
+an 'alias'.
 * Misc
 ** Unary +
 equals to operator.__pos__(). One of its affect as far as I know is to
