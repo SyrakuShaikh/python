@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2016-12-17 Sat 19:28:08 Shaikh>
+# Time-stamp: <2016-12-17 Sat 19:33:12 Shaikh>
 """
 Test 'sys' module's 'argv' method.
 
 Is there any difference between ~python3 hello.py~ and ~./hello.py~.
 """
+
+__author__ = 'Shaikh'
 
 import sys
 
