@@ -1,4 +1,4 @@
-# Time-stamp: <2016-12-21 Wed 16:49:46 Shaikh>
+# Time-stamp: <2016-12-21 Wed 18:00:02 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -81,6 +81,20 @@ The interaction between parametric polymorphism and subtyping leads to the conce
      # follow the above example
      Student.set_age = set_age
    #+END_SRC
+** ~__slots__~ variable
+~__slots__~ is usually used to restrict the allowed variables of a *class*. Its
+value is a tuple.
+
+~__slots__~ affects only the instances created by the class, not ones of their
+subclasses. One can simply use ~=~ to change the value of ~__slots__~ outside of
+the class definition. However, this does change the value but the restrictions
+do not change accordingly.
+
+One way to bypass ~__slots__~ is defining a set-variable-method and adding this
+method to the class.
+
+Subclasses can inherit the ~__slots__~ by defining their own ~__slots__~ which
+will *append* to the superclass's ~__slots__~.
 * Exceptions
 ** with statement
 See [[https://www.python.org/dev/peps/pep-0343/][PEP 343]] for details. It is a simple and elegant way to replace the
