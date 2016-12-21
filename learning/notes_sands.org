@@ -1,4 +1,4 @@
-# Time-stamp: <2016-03-31 Thu 16:34:36 Shaikh>
+# Time-stamp: <2016-12-21 Wed 16:49:46 Shaikh>
 #+TITLE: Notes, More Like Sands.
 #+AUTHOR: Shaikh
 #+DATE: [2016-03-12 Sat]
@@ -35,6 +35,52 @@ using /double underscore/.
 
 Python does not automatically call the constructor of the base class,
 you have to explicitly call it yourself.
+** polymorphism
+From Wikipedia.
+
+In programming languages and type theory, polymorphism is the provision of a
+single interface to entities of different types. A polymorphic type is one whose
+operations can also be applied to values of some other type, or types. There are
+several fundamentally different kinds of polymorphism:
+
++ *Ad hoc polymorphism*: when a function denotes different and potentially
+  heterogeneous implementations depending on a limited range of individually
+  specified types and combinations. Ad hoc polymorphism is supported in many
+  languages using function overloading.
++ *Parametric polymorphism*: when code is written without mention of any specific
+  type and thus can be used transparently with any number of new types. In the
+  object-oriented programming community, this is often known as generics or
+  generic programming. In the functional programming community, this is often
+  shortened to polymorphism.
++ *Subtyping* (also called subtype polymorphism or inclusion polymorphism): when a
+  name denotes instances of many different classes related by some common
+  superclass.[3] In the object-oriented programming community, this is often
+  referred to as simply polymorphism.
+
+The interaction between parametric polymorphism and subtyping leads to the concepts of variance and bounded quantification.
+** add a method to an instance or a class
+1. To an instance.
+
+   #+BEGIN_SRC python
+     from types import MethodType
+
+     class Student(object):
+         pass
+
+
+     def set_age(self, age):
+         self.age = age
+
+     s = Student()
+     s.set_age = MethodType(set_age, s)
+   #+END_SRC
+
+2. To a class
+
+   #+BEGIN_SRC python
+     # follow the above example
+     Student.set_age = set_age
+   #+END_SRC
 * Exceptions
 ** with statement
 See [[https://www.python.org/dev/peps/pep-0343/][PEP 343]] for details. It is a simple and elegant way to replace the
