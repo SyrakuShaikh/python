@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-01-06 Fri 21:33:13 Shaikh>
+# Time-stamp: <2017-01-13 Fri 14:21:11 Shaikh>
 """
 The Coin Change Problem
 https://www.hackerrank.com/challenges/coin-change
@@ -13,42 +13,51 @@ clue:
 
 1. sorted tuples in set. {(,), (,),...} can eliminate overlappings.
 2. save results in dict can improve performance.
+3. only require the number of ways but not showing all the ways.
+4. since clue-3, clue-1 is changed, only save the length of that set.
+
+another clue:
+
+1. there is a way to build a list level by level that no overlappings will exist.
+2. example for coin types [1, 2, 3]
+   1                                2            3
+   1              2        3        2       3    3
+   1      2    3  2    3   3        2    3  3    3
+   1 2 3  2 3  3  2 3  3   3        2 3  3  3    3
+3. see coin-change-v2.py for details
 """
 def ts(l: list) -> tuple:
     """
-    Tuple of sorted list.
+    Sort the list first and then convert it to tuple type.
     """
     return tuple(sorted(l))
 
 
-def ways(n: list, types: list) -> tuple:
+def ways(n: list, types: list) -> list:
     """
-    a
+    Calculate the number of ways to make coin change.
     """
+    if len(n) == 0:
+        return n
     global SOLVED
-    c = types
-    solve = True
-    rlt = list()
+    rlt = list()   # temp
+    rltc = list()  # solved, count
     for nl in n:
         d = nl[-1]
         if d in SOLVED:
-            for s in SOLVED[d]:
-                rlt += [nl[:-1] + list(s)]
+            # rltc += SOLVED[d]
+            rltc += [nl[:-1] + list(so) for so in SOLVED[d]]
         else:
+            c = types[:]
             for tp in c:
-                if d - tp in c:
-                    c.remove(d - tp)
+                if d == tp:
+                    rltc += [nl]
+                if d - tp in c and d - tp != tp:
                     rlt += [nl[:-1] + [tp, d - tp]]
+                    c.remove(d - tp)
                 elif d - tp >= c[0]:
                     rlt += [nl[:-1] + [tp, d - tp]]
-                elif d == c:
-                    rlt += [nl]
-        if solve:
-            s_temp = set()
-            for r in n:
-                s_temp.add(ts(r))
-            SOLVED[sum(n[0])] = s_temp
-    return rlt, solve
+    return rltc + ways(rlt, types)
 
 
 # dict: key is an integer N, value is sorted tuples in list.
@@ -57,16 +66,21 @@ SOLVED = dict()
 N, M = input().strip().split(' ')
 N, M = [int(N), int(M)]
 
-C = input().strip().split(' ')
-C = sorted([int(i) for i in C])
+C = sorted([int(i) for i in input().strip().split(' ')])
+for ty in C:
+    temp = set()
+    for r in ways([[ty]], C):
+        temp.add(ts(r))
+    SOLVED[ty] = temp
 
-NC = [[i] for i in C]
-while not ways(NC, C)[1]:
-    NC = ways(NC, C)[0]
-    print(NC)
+NL = list()
+for ty in C:
+    NL += list(range(N, C[-1], -ty))
 
-print(SOLVED)
-SN = ways([[N]], C)[0]
-while not ways(SN, C)[1]:
-    SN = ways(SN, C)[0]
-    print(SN)
+for n in ts(NL):
+    rlts = set()
+    for l in ways([[n]], C):
+        rlts.add(ts(l))
+    SOLVED[n] = rlts
+
+print(len(SOLVED[N]))
