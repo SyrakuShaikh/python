@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-02-24 Fri 21:20:27 Shaikh>
+# Time-stamp: <2017-02-27 Mon 19:12:08 Shaikh>
 """
 Lily's Homework
 
@@ -32,7 +32,7 @@ def insertion_sort(ar: list):
             ar[j] = pivot
 
 
-def cqc(ar: list, st: int, ed: int):
+def cqs(ar: list, st: int, ed: int):
     """
     Quick Sort Function.
 
@@ -41,7 +41,7 @@ def cqc(ar: list, st: int, ed: int):
     Fixed position pivot.
     """
     if ed - st < 2:
-        return
+        return ar
     pivot = ar[ed-1]
     index = st
     for i, a in enumerate(ar[st:ed-1]):
@@ -52,22 +52,25 @@ def cqc(ar: list, st: int, ed: int):
             index += 1
     if index != ed-1:
         ar[ed-1], ar[index] = ar[index], ar[ed-1]
-    cqc(ar, st, index)
-    cqc(ar, index+1, ed)
+    ar = cqs(ar, st, index)
+    ar = cqs(ar, index+1, ed)
+    return ar
 
 
-def dpqc(ar: list, left: int, right: int):
+def dpqs(ar: list, left: int, right: int):
     """
     Dual-Pivot Quick Sort.
     """
-    if right - left < 10:
-        print(*ar[left:right+1])
-        cqc(ar, left, right+1)
-        print(*ar[left:right+1])
-        return
+    if right - left < 1:
+        return ar
+    elif right - left < 100:
+        ar = cqs(ar, left, right+1)
+        return ar
+
     # record the initial left index which may be used
     # later when the partition completes.
     oldleft = left
+
     # locate the two pivots' index
     while ar[left] >= ar[right] and left < right:
         if ar[left] > ar[right]:
@@ -84,7 +87,7 @@ def dpqc(ar: list, left: int, right: int):
         less += 1
     # when loop ends, ar[less] >= pivot1
 
-    king = less + 1
+    king = less
     while king < right and pivot1 <= ar[king] <= pivot2:
         king += 1
     # when loop ends, ar[king] is < pivot1 or > pivot2.
@@ -105,14 +108,18 @@ def dpqc(ar: list, left: int, right: int):
             ar[king], ar[great] = ar[great], ar[king]
             great -= 1
     # partition completes!
-    ar[right], ar[great] = ar[great], ar[right]
-    ar = ar[0:oldleft] + ar[left+1:less] + ar[oldleft:left+1] + ar[less:]
-    # recursion
-    print(*ar)
-    dpqc(ar, oldleft, oldleft+less-left-2)
-    dpqc(ar, less, great-1)
-    dpqc(ar, king+1, right)
 
+    # arrange two pivots
+    ar[right], ar[king] = ar[king], ar[right]
+    ar[left], ar[less-1] = ar[less-1], ar[left]
+    ar = ar[0:oldleft] + ar[left:king] + ar[oldleft:left] + ar[king:]
+
+    # recursion
+    dif = left - oldleft
+    ar = dpqs(ar, oldleft, less-2-dif)
+    ar = dpqs(ar, less-dif, great-dif)
+    ar = dpqs(ar, king+1, right)
+    return ar
 
 
 def swaps(ar: list, ars: list) -> int:
@@ -136,27 +143,21 @@ def swaps(ar: list, ars: list) -> int:
             ard.pop(a)
     return n
 
-# t = int(input().strip())
-# array = [int(x) for x in input().strip().split(' ')]
-# arrays = array[:]
+t = int(input().strip())
+array = [int(x) for x in input().strip().split(' ')]
+arrays = array[:]
 
 # here used the built-in 'sort' function can pass all the test_cases
 # therefore I need to find a better sort algorithm.
-# (my cqc is not good enough)
-# cqc(arrays, 0, len(arrays))
-# if t < 47:
-#     insertion_sort(arrays)
-# else:
-#     dpqc(arrays, 0, len(arrays)-1)
+# (my cqs is not good enough)
+# cqs(arrays, 0, len(arrays))
+if t < 47:
+    insertion_sort(arrays)
+else:
+    arrays = dpqs(arrays, 0, len(arrays)-1)
 
-# arrayss = arrays[:]
-# arrayss.reverse()
-# c1 = swaps(array, arrays)
-# c2 = swaps(array, arrayss)
-# print(min(c1, c2))
-
-from random import sample
-arr = sample(list(range(1, 200)), k=30)
-print(*arr)
-dpqc(arr, 0, len(arr)-1)
-print(*arr)
+arrayss = arrays[:]
+arrayss.reverse()
+c1 = swaps(array, arrays)
+c2 = swaps(array, arrayss)
+print(min(c1, c2))
