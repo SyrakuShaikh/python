@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-02-27 Mon 19:12:08 Shaikh>
+# Time-stamp: <2017-03-01 Wed 20:47:57 Shaikh>
 """
 Lily's Homework
 
@@ -61,23 +61,41 @@ def dpqs(ar: list, left: int, right: int):
     """
     Dual-Pivot Quick Sort.
     """
-    if right - left < 1:
+    length = right - left
+    if length < 1:
         return ar
-    elif right - left < 100:
+    elif length < 300:
         ar = cqs(ar, left, right+1)
         return ar
 
-    # record the initial left index which may be used
-    # later when the partition completes.
-    oldleft = left
+    # # record the initial left index which may be used
+    # # later when the partition completes.
+    # oldleft = left
 
-    # locate the two pivots' index
-    while ar[left] >= ar[right] and left < right:
-        if ar[left] > ar[right]:
-            ar[left], ar[right] = ar[right], ar[left]
-            break
-        else:
-            left += 1
+    # # locate the two pivots' index
+    # while ar[left] >= ar[right] and left < right:
+    #     if ar[left] > ar[right]:
+    #         ar[left], ar[right] = ar[right], ar[left]
+    #         break
+    #     else:
+    #         left += 1
+
+    pivots = {}
+    i = 5
+    while len(pivots) < 5:
+        div = (length - 2) // i
+        pivots = {ar[left + x * div]:left + x * div for x in range(1, i+1)}
+        i += 1
+
+    pivotsK = list(pivots.keys())
+    insertion_sort(pivotsK)
+
+    newdiv = len(pivots) // 3
+    newleft = pivots[pivotsK[1*newdiv]]
+    newright = pivots[pivotsK[2*newdiv+1]]
+
+    ar[left], ar[newleft] = ar[newleft], ar[left]
+    ar[right], ar[newright] = ar[newright], ar[right]
 
     pivot1 = ar[left]
     pivot2 = ar[right]
@@ -112,12 +130,12 @@ def dpqs(ar: list, left: int, right: int):
     # arrange two pivots
     ar[right], ar[king] = ar[king], ar[right]
     ar[left], ar[less-1] = ar[less-1], ar[left]
-    ar = ar[0:oldleft] + ar[left:king] + ar[oldleft:left] + ar[king:]
+    # ar = ar[0:oldleft] + ar[left:king] + ar[oldleft:left] + ar[king:]
 
     # recursion
-    dif = left - oldleft
-    ar = dpqs(ar, oldleft, less-2-dif)
-    ar = dpqs(ar, less-dif, great-dif)
+    # dif = left - oldleft
+    ar = dpqs(ar, left, less-2)
+    ar = dpqs(ar, less, great)
     ar = dpqs(ar, king+1, right)
     return ar
 
