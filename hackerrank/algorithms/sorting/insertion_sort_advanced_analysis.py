@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-03-03 Fri 20:38:41 Shaikh>
+# Time-stamp: <2017-03-17 Fri 15:57:25 Shaikh>
 """
 Insertion Sort Advanced Analysis
 
@@ -12,6 +12,9 @@ of times Insertion Sort shifts each elements when sorting an array?
 If k_i is the number of elements over which the i^th element of the array has
 to shift, then the total number of shifts will be k_1 + k_2 + ... + k_N.
 """
+from random import randint
+
+
 def sorttest(l: list) -> bool:
     """
     Test whether a list is sorted.
@@ -65,15 +68,42 @@ def divide(element: int, LIST: list) -> list:
     return partitions + [MAX]
 
 
+def check():
+    """
+    Check function.
+
+    Check whether every 'value' of the dictionary PARTS is shorter than NUMS.
+    """
+    global PARTS, NUMS
+    new_parts = dict()
+    for k, v in PARTS.items():
+        if len(v) > NUMS and k != 'R':
+            trys = 1
+            temp = [v, [], None]
+            while len(temp[0]) > NUMS or len(temp[1]) > NUMS:
+                pivot_index = randint(0, len(v))
+                pivot = v[pivot_index]
+                temp = divide(pivot, v)
+                new_parts[k] = temp[1]
+                new_parts[pivot] = temp[0]
+                if trys > 30:
+                    break
+                else:
+                    trys += 1
+        else:
+            new_parts[k] = v
+    PARTS = new_parts
+
+
 def insertion(length: int, LIST: list) -> int:
-    global PARTS
+    global PARTS, NUMS
     sums = 0
-    if length < 50:
+    if length < 5000:
         return counting(length, LIST)
     else:
-        sums = counting(49, LIST[:49])
+        sums = counting(4999, LIST[:4999])
 
-        i = 49
+        i = 4999
         temp = divide(LIST[i], LIST[:i])
         PARTS[LIST[i]] = temp[0]
         PARTS['R'] = temp[1] + [LIST[i]]
@@ -102,9 +132,10 @@ def insertion(length: int, LIST: list) -> int:
             else:
                 tempc = divide(LIST[i], PARTS[tempa[2]])
                 sums += len(tempc[0])
-                if len(PARTS[tempa[2]]) > 1000:
+                if len(PARTS[tempa[2]]) > NUMS:
                     PARTS[LIST[i]] = tempc[0]
                     PARTS[tempa[2]] = tempc[1] + [LIST[i]]
+            check()
 
         return sums
 
@@ -114,6 +145,7 @@ for i in range(t):
     n = int(input().strip())
     arr = [int(x) for x in input().strip().split(' ')]
     PARTS = dict()
+    NUMS = 2000
     total = 0
     if n != 1 and not sorttest(arr):
         total = insertion(n, arr)
