@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-01-04 Wed 16:48:46 Shaikh>
+# Time-stamp: <2017-03-23 Thu 17:40:50 Shaikh>
 """
-Project Euler #5:
+Project Euler #5: Smallest Multiple
 
 2520 is the smallest number that can be divided by each of the numbers from 1
 to 10 without any remainder.

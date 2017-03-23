@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-01-04 Wed 16:14:41 Shaikh>
+# Time-stamp: <2017-03-23 Thu 17:40:29 Shaikh>
 """
-Project Euler #4:
+Project Euler #4: Largest Palindrome Product
 
 A palindromic number reads the same both ways. The smallest 6 digit palindrome
 made from the product of two 3-digit numbers is 101101 = 143 x 707.

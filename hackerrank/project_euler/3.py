@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-01-01 Sun 18:40:02 Shaikh>
+# Time-stamp: <2017-03-23 Thu 17:38:29 Shaikh>
 """
-Project Euler #3:
+Project Euler #3: Largest Prime Factor
 
 The prime factors of 13195 are 5, 7, 13 and 29.
 

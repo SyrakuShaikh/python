@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2016-12-31 Sat 13:12:46 Shaikh>
+# Time-stamp: <2017-03-23 Thu 17:36:58 Shaikh>
 """
-Project Euler #1:
+Project Euler #1: Multiples of 3 and 5
 
 If we list all the natural numbers below that are multiples of 3 or 5, we get
 3, 5, 6 and 9. The sum of these multiples is 23.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-01-26 Thu 23:47:37 Shaikh>
+# Time-stamp: <2017-03-23 Thu 17:41:12 Shaikh>
 """
-Project Euler #6:
+Project Euler #6: Sum Square Difference
 
 The sum of the squares of the first ten natural numbers is, 1^2 + 2^2 + ... +
 10^2 = 385. The square of the sum of the first ten natural numbers is, (1 + 2 +
