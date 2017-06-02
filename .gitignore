@@ -9,6 +9,7 @@ __pycache__/
 
 # # C extensions
 *.so
+*.so.reload*
 
 # # Distribution / packaging
 # .Python
