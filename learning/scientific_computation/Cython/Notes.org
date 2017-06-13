@@ -1,0 +1,34 @@
+#+TITLE: Notes of Using *Cython* to Speedup!
+#+Time-stamp: <2017-06-13 Tue 19:55:09 Shaikh>
+
+* Python Bottleneck
+** CPU-dominated work
+1. mathematical calculations.
+2. loops, recursions.
+** Parser
+1. XML parser
+2. JSON parser
+* Almost the Same
+** I/O related
+This is mostly affected by the *hardwares*. A SSD disk improves much more than
+changing programming languages.
+** Network manipulation
+GFW? 10M Download V.S. 1M UP? 2RMB/GB net traffic?
+* Where We Translate Our Codes to Cython
+** Data types
+Not only the usual =int=, =double=, =complex= but also the original Python types
+=list=, =set=, =dict=, all these need to be static declared.
+** Functions definition
+=cdef= and =cpdef= with proper return types.
+** Nested python data structures
+List-of-tuples-of-....., please transform them to =C= =struct= or =array=.
+** Core math function
+Use the ones in =C= libraries.
+
+#+BEGIN_SRC python
+  from libc.math cimport sqrt, exp
+#+END_SRC
+
+** Nested loops
+Use ~cython -a~ to make sure that the whole nested loops are fully converted to
+its =C= version: all variable static declared and no /yellow/ lines.
