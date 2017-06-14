@@ -1,5 +1,5 @@
 #+TITLE: Notes of Using *Cython* to Speedup!
-#+Time-stamp: <2017-06-13 Tue 19:55:09 Shaikh>
+#+Time-stamp: <2017-06-14 Wed 20:08:17 Shaikh>
 
 * Python Bottleneck
 ** CPU-dominated work
@@ -32,3 +32,6 @@ Use the ones in =C= libraries.
 ** Nested loops
 Use ~cython -a~ to make sure that the whole nested loops are fully converted to
 its =C= version: all variable static declared and no /yellow/ lines.
+** Type as many as possible
+=C= data types, =Python= types, =Python= class-instances, user-defined
+functions, user-defined class-instances.
