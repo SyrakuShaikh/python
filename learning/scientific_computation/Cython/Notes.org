@@ -1,5 +1,5 @@
 #+TITLE: Notes of Using *Cython* to Speedup!
-#+Time-stamp: <2017-06-14 Wed 20:08:17 Shaikh>
+#+Time-stamp: <2017-06-15 Thu 19:36:21 Shaikh>
 
 * Python Bottleneck
 ** CPU-dominated work
@@ -35,3 +35,8 @@ its =C= version: all variable static declared and no /yellow/ lines.
 ** Type as many as possible
 =C= data types, =Python= types, =Python= class-instances, user-defined
 functions, user-defined class-instances.
+** =inline= is important
+For small functions in =.pyx= file, use =inline= keyword before type declaration is important.
+** ~cython.cdivision(True)~ is not that important
+Although in "--annotate", it's marked a light-yellow line, this
+"compiler-directive" does not affect performance much and may result in safety problems.
