@@ -1,5 +1,5 @@
 #+TITLE: Notes of Using *Cython* to Speedup!
-#+Time-stamp: <2017-06-16 Fri 16:20:05 Shaikh>
+#+Time-stamp: <2017-06-16 Fri 19:40:18 Shaikh>
 
 * Python Bottleneck
 ** CPU-dominated work
@@ -51,3 +51,23 @@ and this is the default layout of =NumPy= arrays.
   cdef double[:, ::1] c-contig-mv
   cdef double[::1, :] f-contig-mv
 #+END_SRC
+** More about =memoryview=
+In *Cython*, to get the =memoryview='s data type at compile-time, one should use
+~mv.base.dtype~ if its object is a /np.ndarray/.
+
+C-level dynamical size array?
+
+#+BEGIN_SRC python
+  from libc.stdlib cimport malloc
+
+  def dynamic(size_t N, size_t M):
+      cdef long *arr = <long*>malloc(N * M * sizeof(long))
+      cdef long[:, ::1] mv = <long[:N, :M]>arr
+#+END_SRC
+
+When in a =def= function and need to return the memoryview, if it's dynamical,
+that's OK; if it's fixed-size, one needs to convert it firstly via
+~np.asarray(mv)~.
+
+There is still one last problem about memory management about C arrays, it's too
+tricky, please see K.W.Smith Cython_Book-2015 P.189
