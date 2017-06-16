@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-06-02 Fri 15:03:14 Shaikh>
+# Time-stamp: <2017-06-16 Fri 18:57:39 Shaikh>
 import numpy as np
 import convolve_py
 
 import pyximport
 pyximport.install(setup_args={"include_dirs": np.get_include()},
-                  reload_support=True,
-                  inplace=True)
+                  reload_support=False, inplace=False)
 import convolve_c
 import convolve_c2
 import convolve_c3
 import convolve_c4
+import convolve_c5
 
 import timeit
 
@@ -35,5 +35,7 @@ print("Original Python version: \n",
       timeit.timeit('convolve_c2.naive_convolve(f, g)', number=5, globals=globals()),
       "\nCython version (efficient indexing): \n",
       timeit.timeit('convolve_c3.naive_convolve(f, g)', number=5, globals=globals()),
-      "\nCython version (more efficient indexing: \n)",
-      timeit.timeit('convolve_c4.naive_convolve(f, g)', number=5, globals=globals()))
+      "\nCython version (more efficient indexing): \n",
+      timeit.timeit('convolve_c4.naive_convolve(f, g)', number=5, globals=globals()),
+      "\nCython version (use typed memoryview, a simpler syntax.): \n",
+      timeit.timeit('convolve_c5.naive_convolve(f, g)', number=5, globals=globals()))
