@@ -1,5 +1,5 @@
 #+TITLE: Notes of Using *Cython* to Speedup!
-#+Time-stamp: <2017-06-15 Thu 19:56:13 Shaikh>
+#+Time-stamp: <2017-06-16 Fri 16:20:05 Shaikh>
 
 * Python Bottleneck
 ** CPU-dominated work
@@ -43,3 +43,11 @@ Although in "--annotate", it's marked a light-yellow line, this
 
 However, if a division operation is inside a ~for~ loop and the loop is huge,
 this directive matters.
+** Use typed (=C=-contiguous) memoryview array
+Use =C= contiguous instead of strided version can be more efficient in indexing
+and this is the default layout of =NumPy= arrays.
+
+#+BEGIN_SRC python
+  cdef double[:, ::1] c-contig-mv
+  cdef double[::1, :] f-contig-mv
+#+END_SRC
