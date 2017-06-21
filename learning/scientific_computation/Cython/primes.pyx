@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Time-stamp: <2017-05-31 Wed 16:46:12 Shaikh>
+# Time-stamp: <2017-06-22 Thu 00:16:59 Shaikh>
 def primes(int kmax):
+    """Produce primes."""
     cdef int n, k, i
     cdef int p[1000]
     result = []
